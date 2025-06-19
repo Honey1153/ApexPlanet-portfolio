@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Personal Portfolio</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap');
+
+  /* Reset and base */
+  *, *::before, *::after {
+    box-sizing: border-box;
+  }
+  body {
+    margin: 0;
+    font-family: 'Inter', sans-serif;
+    background: #f9fafb;
+    color: #374151;
+    line-height: 1.6;
+  }
+  a {
+    color: #4f46e5;
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+  a:hover, a:focus {
+    color: #4338ca;
+    outline: none;
+  }
+
+  /* Container */
+  .container {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 32px 24px;
+  }
+
+  /* Header & Nav */
+  header {
+    background: #ffffff;
+    padding: 24px 0;
+    position: sticky;
+    top: 0;
+    box-shadow: 0 1px 5px rgba(0,0,0,0.05);
+    z-index: 1000;
+  }
+  nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .logo {
+    font-weight: 900;
+    font-size: 1.5rem;
+    color: #4f46e5;
+    user-select: none;
+  }
+  .nav-links {
+    display: flex;
+    gap: 24px;
+  }
+  .nav-links a {
+    font-weight: 600;
+    font-size: 1rem;
+    padding: 8px 4px;
+    position: relative;
+  }
+  .nav-links a::after {
+    content: '';
+    position: absolute;
+    height: 2px;
+    width: 0;
+    left: 0;
+    bottom: 0;
+    background: #4f46e5;
+    transition: width 0.3s ease;
+  }
+  .nav-links a:hover::after,
+  .nav-links a:focus::after,
+  .nav-links a.active::after {
+    width: 100%;
+  }
+
+  /* Sections */
+  section {
+    padding: 64px 0;
+  }
+
+  h1, h2, h3 {
+    font-weight: 700;
+    color: #111827;
+  }
+  h1 {
+    font-size: 3rem;
+    margin-bottom: 16px;
+  }
+  h2 {
+    font-size: 2rem;
+    margin-bottom: 24px;
+  }
+  h3 {
+    font-size: 1.25rem;
+    margin-bottom: 8px;
+  }
+
+  p {
+    font-size: 1rem;
+    color: #4b5563;
+    max-width: 700px;
+  }
+
+  /* About Section */
+  #about .profile-img {
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    object-fit: cover;
+    box-shadow: 0 10px 20px rgba(79,70,229,0.1);
+    margin-bottom: 24px;
+  }
+  #about .about-text {
+    max-width: 600px;
+  }
+
+  /* Projects Section */
+  #projects .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit,minmax(280px,1fr));
+    gap: 32px;
+  }
+  .project-card {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  .project-card:hover,
+  .project-card:focus-within {
+    transform: translateY(-8px);
+    box-shadow: 0 16px 40px rgba(79,70,229,0.15);
+  }
+  .project-card h3 {
+    margin-bottom: 12px;
+  }
+  .project-card p {
+    flex-grow: 1;
+  }
+  .project-links {
+    margin-top: 16px;
+  }
+  .project-links a {
+    margin-right: 16px;
+    font-weight: 600;
+    color: #4f46e5;
+  }
+
+  /* Contact Section */
+  form {
+    max-width: 500px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  label {
+    font-weight: 600;
+    margin-bottom: 4px;
+    font-size: 1rem;
+    color: #374151;
+  }
+  input, textarea {
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    padding: 12px 16px;
+    font-size: 1rem;
+    font-family: 'Inter', sans-serif;
+    transition: border-color 0.3s ease;
+  }
+  input:focus, textarea:focus {
+    border-color: #4f46e5;
+    outline: none;
+  }
+  button {
+    background: #4f46e5;
+    color: #ffffff;
+    border: none;
+    padding: 14px 24px;
+    border-radius: 12px;
+    font-weight: 700;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    align-self: flex-start;
+  }
+  button:hover, button:focus {
+    background: #4338ca;
+    outline: none;
+  }
+
+  /* Responsive Nav Mobile */
+  @media (max-width: 768px) {
+    .nav-links {
+      display: none;
+    }
+    .menu-toggle {
+      display: block;
+      cursor: pointer;
+      font-size: 2rem;
+      border: none;
+      background: none;
+      color: #4f46e5;
+    }
+    .nav-links.active {
+      display: flex;
+      flex-direction: column;
+      position: absolute;
+      background: #ffffff;
+      top: 72px;
+      right: 24px;
+      box-shadow: 0 8px 20px rgba(79,70,229,0.15);
+      border-radius: 12px;
+      padding: 16px;
+      width: 200px;
+      z-index: 1001;
+    }
+    .nav-links a {
+      padding: 12px 0;
+      display: block;
+    }
+  }
+
+</style>
+</head>
+<body>
+<header>
+  <div class="container">
+    <nav aria-label="Primary navigation">
+      <span class="logo" tabindex="0">YourName</span>
+      <button class="menu-toggle" aria-controls="primary-navigation" aria-expanded="false" aria-label="Toggle menu">&#9776;</button>
+      <div class="nav-links" id="primary-navigation">
+        <a href="#about" class="active" tabindex="0">About</a>
+        <a href="#projects" tabindex="0">Projects</a>
+        <a href="#contact" tabindex="0">Contact</a>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<main class="container" tabindex="-1">
+  <section id="about" aria-labelledby="about-title">
+    <h1 id="about-title">About Me</h1>
+    <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/dd931aef-4a39-4ee7-85d1-1b874d54d4b5.png" alt="Portrait of Your Name with a neutral background" class="profile-img" />
+    <div class="about-text">
+      <p>Hello! I'm a passionate software developer specialized in frontend and web technologies. I love building clean, accessible, and performant user experiences. My expertise includes JavaScript, React, CSS, and modern web architecture.</p>
+      <p>With a keen eye for detail and commitment to quality, I deliver professional projects that solve real problems and delight users.</p>
+    </div>
+  </section>
+
+  <section id="projects" aria-labelledby="projects-title">
+    <h2 id="projects-title">Projects</h2>
+    <div class="projects-grid">
+      <article class="project-card" tabindex="0" aria-label="Project: Personal Portfolio Website">
+        <h3>Personal Portfolio</h3>
+        <p>A responsive multi-page portfolio showcasing skills, projects, and contact info, built with HTML, CSS, and JavaScript.</p>
+        <div class="project-links">
+          <a href="https://github.com/" target="_blank" rel="noopener noreferrer" aria-label="GitHub Repository">GitHub</a>
+          <a href="#contact" aria-label="Contact Me about this project">Contact</a>
+        </div>
+      </article>
+      <article class="project-card" tabindex="0" aria-label="Project: To-Do List App">
+        <h3>To-Do List App</h3>
+        <p>A simple, yet efficient to-do list with local storage persistence and intuitive UI for daily task management.</p>
+        <div class="project-links">
+          <a href="https://github.com/" target="_blank" rel="noopener noreferrer" aria-label="GitHub Repository">GitHub</a>
+          <a href="#contact" aria-label="Contact Me about this project">Contact</a>
+        </div>
+      </article>
+      <article class="project-card" tabindex="0" aria-label="Project: Product Listing with Filters">
+        <h3>Product Listing Page</h3>
+        <p>Interactive product page with filtering and sorting functionality for an optimal shopping experience.</p>
+        <div class="project-links">
+          <a href="https://github.com/" target="_blank" rel="noopener noreferrer" aria-label="GitHub Repository">GitHub</a>
+          <a href="#contact" aria-label="Contact Me about this project">Contact</a>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section id="contact" aria-labelledby="contact-title">
+    <h2 id="contact-title">Contact Me</h2>
+    <form id="contact-form" aria-label="Contact form with name, email, and message" novalidate>
+      <label for="name">Name</label>
+      <input type="text" id="name" name="name" placeholder="Your name" required autocomplete="name" />
+
+      <label for="email">Email</label>
+      <input type="email" id="email" name="email" placeholder="your.email@example.com" required autocomplete="email" />
+
+      <label for="message">Message</label>
+      <textarea id="message" name="message" placeholder="Write your message here..." rows="5" required></textarea>
+
+      <button type="submit">Send Message</button>
+      <div id="success-message" aria-live="polite" style="display:none; color: green; margin-top: 8px;">
+        Thanks for reaching out! I'll get back to you soon.
+      </div>
+    </form>
+  </section>
+</main>
+
+<script>
+  // Menu toggle for mobile
+  const menuToggle = document.querySelector('.menu-toggle');
+  const navLinks = document.querySelector('.nav-links');
+
+  menuToggle.addEventListener('click', () => {
+    const expanded = menuToggle.getAttribute('aria-expanded') === 'true' || false;
+    menuToggle.setAttribute('aria-expanded', !expanded);
+    navLinks.classList.toggle('active');
+  });
+
+  // Smooth scroll to sections on nav click and update active nav link
+  const navAnchors = navLinks.querySelectorAll('a');
+  navAnchors.forEach(anchor => {
+    anchor.addEventListener('click', e => {
+      e.preventDefault();
+      const targetId = anchor.getAttribute('href').substring(1);
+      const targetSection = document.getElementById(targetId);
+      targetSection.scrollIntoView({behavior: 'smooth', block: 'start'});
+      // Close menu if mobile
+      if (navLinks.classList.contains('active')) {
+        navLinks.classList.remove('active');
+        menuToggle.setAttribute('aria-expanded', false);
+      }
+      navAnchors.forEach(a => a.classList.remove('active'));
+      anchor.classList.add('active');
+    });
+  });
+
+  // Contact form submission simulation
+  document.getElementById('contact-form').addEventListener('submit', e => {
+    e.preventDefault();
+    // Basic validation
+    const name = e.target.name.value.trim();
+    const email = e.target.email.value.trim();
+    const message = e.target.message.value.trim();
+    if (!name || !email || !message) {
+      alert('Please fill out all fields.');
+      return;
+    }
+    // Show success message and clear form
+    const successMessage = document.getElementById('success-message');
+    successMessage.style.display = 'block';
+    e.target.reset();
+
+    setTimeout(() => {
+      successMessage.style.display = 'none';
+    }, 6000);
+  });
+</script>
+</body>
+</html>
